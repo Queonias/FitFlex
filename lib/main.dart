@@ -1,4 +1,8 @@
 import 'package:academia/home.dart';
+import 'package:academia/telas/exercicios.dart';
+import 'package:academia/telas/profile.dart';
+import 'package:academia/telas/timer.dart';
+import 'package:academia/telas/tips.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -11,19 +15,68 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int _indiceAtual = 0;
+  final List<Widget> _telas = [
+    const Home(),
+    const Timer(),
+    const Exercicios(),
+    const Tips(),
+    const Profile()
+  ];
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Treino',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
+      title: 'FitFlex',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 58, 148, 183)),
+        useMaterial3: true,
+      ),
+      home: Scaffold(
+        body: _telas[_indiceAtual],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _indiceAtual,
+          onTap: (indice) {
+            setState(() {
+              _indiceAtual = indice;
+            });
+          },
+          fixedColor: Colors.blue,
+          unselectedItemColor: Colors.grey,
+          showUnselectedLabels: true,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Início',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.timer),
+              label: 'Timer',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.fitness_center),
+              label: 'Exercícios',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.lightbulb),
+              label: 'Dicas',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Perfil',
+            ),
+          ],
         ),
-        home: const Home());
+      ),
+    );
   }
 }
