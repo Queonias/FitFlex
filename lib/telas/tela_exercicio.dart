@@ -1,3 +1,4 @@
+import 'package:academia/widgets/card_list_exercici.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -57,14 +58,18 @@ class _ExercicioListState extends State<ExercicioList> {
               itemBuilder: (context, index) {
                 // Constrói um card para cada exercício encontrado
                 DocumentSnapshot exercicio = snapshot.data![index];
-                return Card(
-                  child: ListTile(
-                    title: Text(exercicio['name']),
-                    subtitle: Text(exercicio['target']),
+                return Padding(
+                  padding:
+                      const EdgeInsets.only(top: 8.0, right: 5.0, left: 5.0),
+                  child: GestureDetector(
                     onTap: () {
-                      // Ação ao clicar no exercício
-                      print('Clicou no exercício ${exercicio['name']}');
+                      // Ação desejada quando o usuário clicar no card
+                      print('Card clicado: ${exercicio['name']}');
+                      // Adicione aqui a ação que deseja executar
                     },
+                    child: CardList(
+                      exercicio: exercicio,
+                    ),
                   ),
                 );
               },
