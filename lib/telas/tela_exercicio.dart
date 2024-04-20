@@ -1,3 +1,4 @@
+import 'package:academia/telas/tela_details.dart';
 import 'package:academia/widgets/card_list_exercici.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -66,6 +67,12 @@ class _ExercicioListState extends State<ExercicioList> {
                       // Ação desejada quando o usuário clicar no card
                       print('Card clicado: ${exercicio['name']}');
                       // Adicione aqui a ação que deseja executar
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TelaDetails(
+                                exercicio: exercicio, title: widget.title),
+                          ));
                     },
                     child: CardList(
                       exercicio: exercicio,
