@@ -6,12 +6,25 @@ import 'package:academia/telas/tips.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // Verificação de plataforma para definir configurações de persistência
+  if (!kIsWeb) {
+    // Configurações para iOS e Android
+    FirebaseFirestore.instance.settings =
+        const Settings(persistenceEnabled: true);
+  } else {
+    // Configurações para a Web
+    await FirebaseFirestore.instance
+        .enablePersistence(const PersistenceSettings(synchronizeTabs: true));
+  }
   runApp(const MyApp());
 }
 
@@ -26,7 +39,7 @@ class _MyAppState extends State<MyApp> {
   int _indiceAtual = 0;
   final List<Widget> _telas = [
     const Home(),
-    const Timer(),
+    Timer(),
     const Exercicios(),
     const Tips(),
     const Profile()

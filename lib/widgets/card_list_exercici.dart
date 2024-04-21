@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class CardList extends StatelessWidget {
   final DocumentSnapshot exercicio;
@@ -11,6 +14,7 @@ class CardList extends StatelessWidget {
   }) : super(key: key);
 
   final storage = FirebaseStorage.instance;
+  final cacheManager = DefaultCacheManager();
 
   Future<String> loadImage(String imagePath) async {
     try {
@@ -23,10 +27,14 @@ class CardList extends StatelessWidget {
       // Obtém a URL de download da imagem
       final String downloadUrl = await pathReference.getDownloadURL();
 
-      return downloadUrl;
+      // Salva a imagem no cache do dispositivo
+      final File file = await DefaultCacheManager().getSingleFile(downloadUrl);
+
+      // Retorna o caminho local do arquivo salvo no cache
+      return file.path;
     } catch (error) {
       print('Erro ao carregar imagem: $error');
-      return '';
+      return ''; // Retorna uma string vazia em caso de erro
     }
   }
 
@@ -37,23 +45,29 @@ class CardList extends StatelessWidget {
         Card(
           child: Row(
             children: [
-              FutureBuilder<String>(
+              FutureBuilder<String?>(
                 future: loadImage(exercicio['gifUrl']),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
+                    // Se ainda estiver carregando, exibe um indicador de progresso
                     return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
+                    // Se houver um erro, exibe um ícone de erro
                     return const Icon(Icons.error);
-                  } else {
+                  } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                    // Se houver dados no snapshot e não estiver vazio, exibe a imagem
                     return ClipRRect(
                       borderRadius:
                           BorderRadius.circular(0), // Borda personalizada
-                      child: Image.network(
-                        snapshot.data!,
+                      child: Image.file(
+                        File(snapshot.data!),
                         height: 100, // Altura da imagem
                         fit: BoxFit.cover,
                       ),
                     );
+                  } else {
+                    // Se não houver dados no snapshot ou se os dados estiverem vazios, exibe uma mensagem de erro ou placeholder
+                    return const Text('Imagem não encontrada');
                   }
                 },
               ),

@@ -14,7 +14,7 @@ class _TipsState extends State<Tips> {
   final List<Widget> _telas = [
     const Exercicios(),
     const Profile(),
-    const Timer(),
+    Timer(),
     const Tips()
   ];
   @override
