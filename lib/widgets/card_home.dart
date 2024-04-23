@@ -19,6 +19,8 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Pré-carregar a imagem usando precacheImage
+
     return Card(
       child: Material(
         color: Colors.transparent, // Define a cor do Material como transparente

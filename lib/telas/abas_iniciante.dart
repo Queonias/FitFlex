@@ -15,11 +15,12 @@ class _AbaInicianteState extends State<AbaIniciante> {
       body: ListView(
         children: const [
           CustomCard(
-              title: 'Treino de costas',
-              duration: '2 horas e 20 minutos',
-              level: 'Iniciante',
-              image: 'assets/imagens/treino_de_costa.webp',
-              search: 'costas'),
+            title: 'Treino de costas',
+            duration: '2 horas e 20 minutos',
+            level: 'Iniciante',
+            image: 'assets/imagens/treino_de_costa.webp',
+            search: 'costas',
+          ),
           CustomCard(
             title: 'Treino cardio',
             duration: '2 horas e 20 minutos',

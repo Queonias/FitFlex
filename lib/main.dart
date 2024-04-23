@@ -44,6 +44,7 @@ class _MyAppState extends State<MyApp> {
     const Tips(),
     const Profile()
   ];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
