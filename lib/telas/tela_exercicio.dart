@@ -1,3 +1,4 @@
+import 'package:academia/helpers/conect_farebase.dart';
 import 'package:academia/telas/tela_details.dart';
 import 'package:academia/widgets/card_list_exercici.dart';
 import 'package:flutter/material.dart';
@@ -15,24 +16,6 @@ class ExercicioList extends StatefulWidget {
 }
 
 class _ExercicioListState extends State<ExercicioList> {
-  Future<List<DocumentSnapshot>> buscarExercicios(String target) async {
-    try {
-      // Realiza a consulta no Firestore
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('exercicios')
-          .where('bodyPart', isGreaterThanOrEqualTo: target)
-          .where('bodyPart', isLessThanOrEqualTo: '$target\uf8ff')
-          .get();
-
-      // Retorna os documentos encontrados
-      return querySnapshot.docs;
-    } catch (error) {
-      // Trata qualquer erro que ocorrer
-      print('Erro ao buscar exercícios: $error');
-      return [];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +23,7 @@ class _ExercicioListState extends State<ExercicioList> {
         title: Text(widget.title), // Usando o title recebido como parâmetro
       ),
       body: FutureBuilder<List<DocumentSnapshot>>(
-        future: buscarExercicios(
+        future: FarebaseDB().buscarExercicios(
             widget.search), // Realiza a busca com o termo 'quadríceps'
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

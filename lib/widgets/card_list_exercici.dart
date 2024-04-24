@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:path/path.dart';
 import 'dart:typed_data';
-import 'dart:io';
 
 class CardList extends StatelessWidget {
   final DocumentSnapshot exercicio;

@@ -1,14 +1,8 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 
-import 'dart:io';
-
-import 'package:flutter/material.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class ConectDB {
@@ -117,91 +111,3 @@ class ConectDB {
     }
   }
 }
-
-  // Future<void> populateDatabase(Database db) async {
-  //   List<dynamic> jsonData = await fetchData();
-  //   var num = 1;
-  //   String imageUrl =
-  //       'http://[2804:3e60:4db:9300:3455:47aa:5dcf:1dd3]:3000/images/';
-  //   await db.transaction((txn) async {
-  //     for (var item in jsonData) {
-  //       print('item: ${num++}');
-  //       http.Response response =
-  //           await http.get(Uri.parse(imageUrl + item['gifUrl']));
-  //       if (response.statusCode == 200) {
-  //         Uint8List bytes = response.bodyBytes;
-  //         await txn.rawInsert('''
-  //         INSERT INTO images (image, name)
-  //         VALUES (?, ?)
-  //       ''', [
-  //           bytes,
-  //           item['gifUrl'],
-  //         ]);
-  //       } else {
-  //         throw Exception('Falha ao baixar a imagem');
-  //       }
-  //     }
-  //   });
-  // }
-
-  // Future<void> downloadAndSaveImage(Database db, String imageUrl) async {
-  //   http.Response response = await http.get(Uri.parse(imageUrl));
-
-  //   if (response.statusCode == 200) {
-  //     Uint8List bytes = response.bodyBytes;
-
-  //     await db.insert(
-  //       'images',
-  //       {'image': bytes},
-  //       conflictAlgorithm: ConflictAlgorithm.replace,
-  //     );
-  //   } else {
-  //     throw Exception('Falha ao baixar a imagem');
-  //   }
-  // }
-  // Future<List<dynamic>> fetchData() async {
-  //   final url = Uri.parse(
-  //       'http://[2804:3e60:4db:9300:3455:47aa:5dcf:1dd3]:3000/target');
-
-  //   try {
-  //     final response = await http.get(url);
-
-  //     if (response.statusCode == 200) {
-  //       print('Resposta da API: ${response.body}');
-  //       return jsonDecode(response.body);
-  //     } else {
-  //       print('Falha na requisição: ${response.statusCode}');
-  //       return [];
-  //     }
-  //   } catch (e) {
-  //     print('Erro durante a requisição: $e');
-  //     return [];
-  //   }
-  // }
-
-
-  // Future<void> salvaImage(Database db) async {
-  //   List<dynamic> jsonData = await fetchData();
-  //   var num = 1;
-  //   String imageUrl =
-  //       'http://[2804:3e60:4db:9300:3455:47aa:5dcf:1dd3]:3000/images/';
-  //   await db.transaction((txn) async {
-  //     for (var item in jsonData) {
-  //       print('item: ${num++}');
-  //       http.Response response =
-  //           await http.get(Uri.parse(imageUrl + item['gifUrl']));
-  //       if (response.statusCode == 200) {
-  //         Uint8List bytes = response.bodyBytes;
-  //         await txn.rawInsert('''
-  //         INSERT INTO images (image, name)
-  //         VALUES (?, ?)
-  //       ''', [
-  //           bytes,
-  //           item['gifUrl'],
-  //         ]);
-  //       } else {
-  //         throw Exception('Falha ao baixar a imagem');
-  //       }
-  //     }
-  //   });
-  // }
