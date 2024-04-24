@@ -1,6 +1,7 @@
+import 'package:academia/helpers/conect_db.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:typed_data';
 
 class TelaDetails extends StatefulWidget {
   final DocumentSnapshot exercicio;
@@ -13,24 +14,6 @@ class TelaDetails extends StatefulWidget {
 }
 
 class _TelaDetailsState extends State<TelaDetails> {
-  Future<String> loadImage(String imagePath) async {
-    try {
-      String path = 'imagens/$imagePath';
-      // Referência para o arquivo de imagem no Firebase Storage
-      final storageRef = FirebaseStorage.instance.ref();
-      // Create a reference with an initial file path and name
-      final pathReference = storageRef.child(path);
-
-      // Obtém a URL de download da imagem
-      final String downloadUrl = await pathReference.getDownloadURL();
-
-      return downloadUrl;
-    } catch (error) {
-      print('Erro ao carregar imagem: $error');
-      return '';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,23 +26,25 @@ class _TelaDetailsState extends State<TelaDetails> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: FutureBuilder<String>(
-                future: loadImage(widget.exercicio['gifUrl']),
+              child: FutureBuilder<Uint8List?>(
+                future: ConectDB().searchImage(widget.exercicio['gifUrl']),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
                     return const Icon(Icons.error);
-                  } else {
+                  } else if (snapshot.hasData && snapshot.data != null) {
                     return ClipRRect(
                       borderRadius:
                           BorderRadius.circular(0), // Borda personalizada
-                      child: Image.network(
+                      child: Image.memory(
                         snapshot.data!,
                         width: MediaQuery.of(context).size.width,
                         fit: BoxFit.cover,
                       ),
                     );
+                  } else {
+                    return const Text('Imagem não encontrada');
                   }
                 },
               ),

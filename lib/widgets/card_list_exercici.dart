@@ -1,9 +1,11 @@
-import 'dart:io';
-
+import 'package:academia/helpers/conect_db.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:path/path.dart';
+import 'dart:typed_data';
+import 'dart:io';
 
 class CardList extends StatelessWidget {
   final DocumentSnapshot exercicio;
@@ -16,28 +18,6 @@ class CardList extends StatelessWidget {
   final storage = FirebaseStorage.instance;
   final cacheManager = DefaultCacheManager();
 
-  Future<String> loadImage(String imagePath) async {
-    try {
-      String path = 'imagens/$imagePath';
-      // Referência para o arquivo de imagem no Firebase Storage
-      final storageRef = FirebaseStorage.instance.ref();
-      // Create a reference with an initial file path and name
-      final pathReference = storageRef.child(path);
-
-      // Obtém a URL de download da imagem
-      final String downloadUrl = await pathReference.getDownloadURL();
-
-      // Salva a imagem no cache do dispositivo
-      final File file = await DefaultCacheManager().getSingleFile(downloadUrl);
-
-      // Retorna o caminho local do arquivo salvo no cache
-      return file.path;
-    } catch (error) {
-      print('Erro ao carregar imagem: $error');
-      return ''; // Retorna uma string vazia em caso de erro
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -45,8 +25,8 @@ class CardList extends StatelessWidget {
         Card(
           child: Row(
             children: [
-              FutureBuilder<String?>(
-                future: loadImage(exercicio['gifUrl']),
+              FutureBuilder<Uint8List?>(
+                future: ConectDB().searchImage(exercicio['gifUrl']),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     // Se ainda estiver carregando, exibe um indicador de progresso
@@ -54,13 +34,13 @@ class CardList extends StatelessWidget {
                   } else if (snapshot.hasError) {
                     // Se houver um erro, exibe um ícone de erro
                     return const Icon(Icons.error);
-                  } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                  } else if (snapshot.hasData && snapshot.data != null) {
                     // Se houver dados no snapshot e não estiver vazio, exibe a imagem
                     return ClipRRect(
                       borderRadius:
                           BorderRadius.circular(0), // Borda personalizada
-                      child: Image.file(
-                        File(snapshot.data!),
+                      child: Image.memory(
+                        snapshot.data!,
                         height: 100, // Altura da imagem
                         fit: BoxFit.cover,
                       ),
