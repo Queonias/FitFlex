@@ -18,7 +18,7 @@ class _TelaDetailsState extends State<TelaDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.exercicio['name'],
+        title: Text(widget.exercicio['bodyPart'],
             style: const TextStyle(overflow: TextOverflow.ellipsis)),
       ),
       body: SingleChildScrollView(

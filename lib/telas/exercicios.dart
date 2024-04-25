@@ -12,13 +12,6 @@ class Exercicios extends StatefulWidget {
 }
 
 class _ExerciciosState extends State<Exercicios> {
-  List<String> exercicios = [
-    "Exercício 1",
-    "Exercício 2",
-    "Exercício 3",
-    // Adicione mais exercícios conforme necessário
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,9 +31,10 @@ class _ExerciciosState extends State<Exercicios> {
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 10.0,
+                    crossAxisSpacing: 1.0,
                     mainAxisSpacing: 10.0,
-                    mainAxisExtent: 200),
+                    mainAxisExtent: 290,
+                    childAspectRatio: 1.0),
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   DocumentSnapshot exercicio = snapshot.data![index];
@@ -60,7 +54,6 @@ class _ExerciciosState extends State<Exercicios> {
                         );
                       },
                       child: SizedBox(
-                        height: 500, // Ajuste a altura conforme necessário
                         child: CardView(exercicio: exercicio),
                       ),
                     ),
