@@ -1,12 +1,13 @@
-import 'package:academia/home.dart';
-import 'package:academia/telas/exercicios.dart';
-import 'package:academia/telas/profile.dart';
-import 'package:academia/telas/timer.dart';
-import 'package:academia/telas/tips.dart';
+import 'package:academia/telas/menu.dart';
+import 'package:academia/telas/login.dart';
+
 import 'package:flutter/material.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/foundation.dart';
 
 void main() async {
@@ -25,26 +26,31 @@ void main() async {
     await FirebaseFirestore.instance
         .enablePersistence(const PersistenceSettings(synchronizeTabs: true));
   }
-  runApp(const MyApp());
+
+  await Firebase.initializeApp();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final User? usuarioLogado = auth.currentUser;
+  Widget initialWidget;
+  if (usuarioLogado != null) {
+    initialWidget =
+        const Menu(); // Redireciona para a tela Home se o usuário estiver logado
+  } else {
+    initialWidget =
+        const Login(); // Exibe a tela de login se o usuário não estiver logado
+  }
+
+  runApp(MyApp(initialWidget: initialWidget));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final Widget initialWidget;
+  const MyApp({Key? key, required this.initialWidget}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  int _indiceAtual = 0;
-  final List<Widget> _telas = [
-    const Home(),
-    Timer(),
-    const Exercicios(),
-    const Tips(),
-    const Profile()
-  ];
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -55,42 +61,7 @@ class _MyAppState extends State<MyApp> {
             seedColor: const Color.fromARGB(255, 58, 148, 183)),
         useMaterial3: true,
       ),
-      home: Scaffold(
-        body: _telas[_indiceAtual],
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _indiceAtual,
-          onTap: (indice) {
-            setState(() {
-              _indiceAtual = indice;
-            });
-          },
-          fixedColor: Colors.blue,
-          unselectedItemColor: Colors.grey,
-          showUnselectedLabels: true,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Início',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.timer),
-              label: 'Timer',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.fitness_center),
-              label: 'Exercícios',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.lightbulb),
-              label: 'Dicas',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Perfil',
-            ),
-          ],
-        ),
-      ),
+      home: widget.initialWidget,
     );
   }
 }
