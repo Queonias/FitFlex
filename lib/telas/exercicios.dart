@@ -12,6 +12,30 @@ class Exercicios extends StatefulWidget {
 }
 
 class _ExerciciosState extends State<Exercicios> {
+  late ScrollController _scrollController;
+  int quant = 10;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      // O usuário chegou ao final da tela
+      print("Usuário chegou ao final da tela!");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +53,7 @@ class _ExerciciosState extends State<Exercicios> {
               return const Center(child: Text('Nenhum exercício encontrado.'));
             } else {
               return GridView.builder(
+                controller: _scrollController,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 1.0,
@@ -37,6 +62,7 @@ class _ExerciciosState extends State<Exercicios> {
                     childAspectRatio: 1.0),
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
+                  quant = snapshot.data!.length + 10;
                   DocumentSnapshot exercicio = snapshot.data![index];
                   return Padding(
                     padding: const EdgeInsets.all(8.0),

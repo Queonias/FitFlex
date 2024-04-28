@@ -27,7 +27,8 @@ class _TelaDetailsState extends State<TelaDetails> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: FutureBuilder<Uint8List?>(
-                future: ConectDB().searchImage(widget.exercicio['gifUrl']),
+                future: ConectDB()
+                    .searchImage(widget.exercicio['gifUrl'], 'imagens'),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();

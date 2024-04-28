@@ -24,7 +24,7 @@ class CardList extends StatelessWidget {
           child: Row(
             children: [
               FutureBuilder<Uint8List?>(
-                future: ConectDB().searchImage(exercicio['gifUrl']),
+                future: ConectDB().searchImage(exercicio['gifUrl'], 'imagens'),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     // Se ainda estiver carregando, exibe um indicador de progresso

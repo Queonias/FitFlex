@@ -1,9 +1,8 @@
+import 'package:academia/helpers/conect_farebase.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:http/http.dart' as http;
 import 'dart:typed_data';
-
-import 'package:firebase_storage/firebase_storage.dart';
 
 class ConectDB {
   ConectDB._internal();
@@ -31,14 +30,26 @@ class ConectDB {
 
   _onCreate(Database db, int version) async {
     await db.execute('''
-       CREATE TABLE images(id INTEGER PRIMARY KEY, image BLOB, name TEXT)
-      ''');
+    CREATE TABLE imagens(
+      id INTEGER PRIMARY KEY,
+      image BLOB,
+      name TEXT
+    )
+  ''');
+
+    await db.execute('''
+    CREATE TABLE imagem_perfil(
+      id INTEGER PRIMARY KEY,
+      image BLOB,
+      name TEXT
+    )
+  ''');
   }
 
-  Future<void> saveImageToDatabase(String imageName) async {
+  Future<void> saveImageToDatabase(String imageName, String nameFolder) async {
     try {
       // Carrega a imagem do Firebase Storage
-      String imageUrl = await loadImage(imageName);
+      String imageUrl = await FarebaseDB().loadImage(nameFolder, imageName);
       if (imageUrl.isEmpty) {
         print('URL de imagem vazia');
         return;
@@ -52,7 +63,7 @@ class ConectDB {
         // Salva a imagem no banco de dados
         Database db = await this.db;
         await db.insert(
-          'images',
+          nameFolder,
           {'image': bytes, 'name': imageName},
           conflictAlgorithm: ConflictAlgorithm.replace,
         );
@@ -65,10 +76,10 @@ class ConectDB {
     }
   }
 
-  Future<Uint8List?> getImageByName(String name) async {
+  Future<Uint8List?> getImageByName(String name, String tableName) async {
     Database db = await this.db;
     List<Map<String, dynamic>> result = await db.query(
-      'images',
+      tableName,
       columns: ['image'],
       where: 'name = ?',
       whereArgs: [name],
@@ -81,30 +92,11 @@ class ConectDB {
     }
   }
 
-  Future<String> loadImage(String imagePath) async {
-    try {
-      // Caminho completo para o arquivo de imagem no Firebase Storage
-      String path = 'imagens/$imagePath';
-
-      // Referência para o arquivo de imagem no Firebase Storage
-      final storageRef = FirebaseStorage.instance.ref(path);
-
-      // Obtém a URL de download da imagem
-      final String downloadUrl = await storageRef.getDownloadURL();
-
-      // Retorna a URL de download da imagem
-      return downloadUrl;
-    } catch (error) {
-      print('Erro ao carregar imagem: $error');
-      return ''; // Retorna uma string vazia em caso de erro
-    }
-  }
-
-  Future<Uint8List?> searchImage(name) async {
-    Uint8List? image = await getImageByName(name);
+  Future<Uint8List?> searchImage(name, tableName) async {
+    Uint8List? image = await getImageByName(name, tableName);
     if (image == null) {
-      await saveImageToDatabase(name);
-      image = await getImageByName(name);
+      await saveImageToDatabase(name, tableName);
+      image = await getImageByName(name, tableName);
       return image;
     } else {
       return image;
