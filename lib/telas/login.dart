@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:academia/helpers/conect_db.dart';
+import 'package:academia/telas/cadastro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:academia/cadastro.dart';
@@ -171,10 +172,10 @@ class _LoginState extends State<Login> {
                             style: TextStyle(color: Colors.white),
                           ),
                           onTap: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => const Cadastro()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Cadastro()));
                           },
                         ),
                       ),

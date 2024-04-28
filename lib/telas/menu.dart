@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:academia/home.dart';
 import 'package:academia/telas/exercicios.dart';
 import 'package:academia/telas/profile.dart';
