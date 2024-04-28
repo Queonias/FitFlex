@@ -1,7 +1,7 @@
-import 'package:academia/telas/abas_iniciante.dart';
-import 'package:academia/telas/abas_intermediario.dart';
-import 'package:academia/telas/abas_profissional.dart';
-import 'package:academia/telas/abas_todos.dart';
+import 'package:academia/telas/abas/abas_iniciante.dart';
+import 'package:academia/telas/abas/abas_intermediario.dart';
+import 'package:academia/telas/abas/abas_profissional.dart';
+import 'package:academia/telas/abas/abas_todos.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {

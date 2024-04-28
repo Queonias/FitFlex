@@ -1,8 +1,8 @@
 import 'package:academia/home.dart';
-import 'package:academia/telas/exercicios.dart';
-import 'package:academia/telas/profile.dart';
-import 'package:academia/telas/timer.dart';
-import 'package:academia/telas/tips.dart';
+import 'package:academia/telas/menu/exercicios.dart';
+import 'package:academia/telas/menu/profile.dart';
+import 'package:academia/telas/menu/timer.dart';
+import 'package:academia/telas/menu/tips.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatefulWidget {

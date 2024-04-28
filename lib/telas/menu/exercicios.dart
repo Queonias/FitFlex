@@ -60,7 +60,7 @@ class _ExerciciosState extends State<Exercicios> {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 1.0,
-                    mainAxisSpacing: 10.0,
+                    mainAxisSpacing: 1.0,
                     mainAxisExtent: 290,
                     childAspectRatio: 1.0),
                 itemCount: snapshot.data!.length,

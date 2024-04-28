@@ -162,7 +162,6 @@ class _ProfileState extends State<Profile> {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          // backgroundColor: Colors.red[100],
                           foregroundColor: Colors.red[300],
                         ),
                         child: const Row(
