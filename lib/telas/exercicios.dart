@@ -3,6 +3,9 @@ import 'package:academia/telas/tela_details.dart';
 import 'package:academia/widgets/card_view.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:logger/logger.dart';
+
+final logger = Logger();
 
 class Exercicios extends StatefulWidget {
   const Exercicios({super.key});
@@ -32,7 +35,7 @@ class _ExerciciosState extends State<Exercicios> {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
       // O usuário chegou ao final da tela
-      print("Usuário chegou ao final da tela!");
+      logger.e("Usuário chegou ao final da tela!");
     }
   }
 
@@ -68,7 +71,7 @@ class _ExerciciosState extends State<Exercicios> {
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
                       onTap: () {
-                        print('Card clicado: ${exercicio['name']}');
+                        logger.e('Card clicado: ${exercicio['name']}');
                         Navigator.push(
                           context,
                           MaterialPageRoute(

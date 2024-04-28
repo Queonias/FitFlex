@@ -3,11 +3,13 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:http/http.dart' as http;
 import 'dart:typed_data';
+import 'package:logger/logger.dart';
 
 class ConectDB {
   ConectDB._internal();
   static final ConectDB _instance = ConectDB._internal();
   factory ConectDB() => _instance;
+  final logger = Logger();
 
   Database? _db;
 
@@ -24,7 +26,7 @@ class ConectDB {
       var db = await openDatabase(dbPath, version: 1, onCreate: _onCreate);
       return db;
     } catch (e) {
-      print("error $e");
+      logger.e("error $e");
     }
   }
 
@@ -51,7 +53,7 @@ class ConectDB {
       // Carrega a imagem do Firebase Storage
       String imageUrl = await FarebaseDB().loadImage(nameFolder, imageName);
       if (imageUrl.isEmpty) {
-        print('URL de imagem vazia');
+        logger.d('URL de imagem vazia');
         return;
       }
 
@@ -67,12 +69,12 @@ class ConectDB {
           {'image': bytes, 'name': imageName},
           conflictAlgorithm: ConflictAlgorithm.replace,
         );
-        print('Imagem salva no banco de dados com sucesso!');
+        logger.d('Imagem salva no banco de dados com sucesso!');
       } else {
-        print('Falha ao baixar a imagem');
+        logger.d('Falha ao baixar a imagem');
       }
     } catch (error) {
-      print('Erro ao salvar imagem no banco de dados: $error');
+      logger.e('Erro ao salvar imagem no banco de dados: $error');
     }
   }
 

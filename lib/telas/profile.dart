@@ -5,6 +5,7 @@ import 'package:academia/helpers/conect_farebase.dart';
 import 'package:academia/telas/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:logger/logger.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final logger = Logger();
   late User? _user;
   late String _id = '';
   late String _nome = '';
@@ -33,7 +35,7 @@ class _ProfileState extends State<Profile> {
           _nome = jsonString["nome"];
         });
       } else {
-        print('Documento não encontrado.');
+        logger.e('Documento não encontrado.');
       }
     });
   }
@@ -82,7 +84,7 @@ class _ProfileState extends State<Profile> {
                             Padding(
                               padding:
                                   const EdgeInsets.only(top: 8.0, bottom: 1.0),
-                              child: Text(_nome ?? '',
+                              child: Text(_nome,
                                   style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold)),

@@ -155,124 +155,120 @@ class _TimerState extends State<Timer> {
         ],
       ),
       body: SingleChildScrollView(
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: <Widget>[
-                Center(
-                  child: Container(
-                    padding: const EdgeInsets.only(
-                        top: 20.0, bottom: 20.0, left: 12.0, right: 12.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    child: Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 10.0),
-                          child: Text(
-                            'Duração do tempo: 5 segundos',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(
-                              color: Colors.grey, // Cor da borda
-                              width: 1.0, // Largura da borda
-                            ),
-                            borderRadius: BorderRadius.circular(
-                                5.0), // Raio do canto da borda
-                          ),
-                          child: TextField(
-                            controller: _controllerTempo,
-                            keyboardType: TextInputType.number,
-                            style: const TextStyle(
-                              color: Colors.black,
-                            ),
-                            decoration: const InputDecoration(
-                              hintText: 'Defina o tempo em segundos',
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.all(10.0),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: <Widget>[
+              Center(
+                child: Container(
+                  padding: const EdgeInsets.only(
+                      top: 20.0, bottom: 20.0, left: 12.0, right: 12.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Theme.of(context).primaryColor,
                   ),
-                ),
-                Center(
-                  child: clock,
-                ),
-                const Text(
-                  kWorkLabel,
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: widget.timesCompleted,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            switchClockActionButton();
-                          });
-                        },
-                        child: Container(
-                          width: width / 2.5,
-                          height: height / 8,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: _clockButton,
+                  child: Column(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 10.0),
+                        child: Text(
+                          'Duração do tempo: 5 segundos',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 3.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _clockController.restart(
-                                duration: int.parse(
-                                    _controllerTempo.text.isEmpty
-                                        ? '5'
-                                        : _controllerTempo.text));
-                            _clockButton = kPlayClockButton;
-                            _clockController.pause();
-                          });
-                        },
-                        child: Container(
-                          width: width / 2.5,
-                          height: height / 8,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.circular(10.0),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            color: Colors.grey, // Cor da borda
+                            width: 1.0, // Largura da borda
                           ),
-                          child: const Icon(
-                            Icons.refresh,
+                          borderRadius: BorderRadius.circular(
+                              5.0), // Raio do canto da borda
+                        ),
+                        child: TextField(
+                          controller: _controllerTempo,
+                          keyboardType: TextInputType.number,
+                          style: const TextStyle(
                             color: Colors.black,
                           ),
+                          decoration: const InputDecoration(
+                            hintText: 'Defina o tempo em segundos',
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.all(10.0),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Center(
+                child: clock,
+              ),
+              const Text(
+                kWorkLabel,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: widget.timesCompleted,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          switchClockActionButton();
+                        });
+                      },
+                      child: Container(
+                        width: width / 2.5,
+                        height: height / 8,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: _clockButton,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 3.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _clockController.restart(
+                              duration: int.parse(_controllerTempo.text.isEmpty
+                                  ? '5'
+                                  : _controllerTempo.text));
+                          _clockButton = kPlayClockButton;
+                          _clockController.pause();
+                        });
+                      },
+                      child: Container(
+                        width: width / 2.5,
+                        height: height / 8,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: const Icon(
+                          Icons.refresh,
+                          color: Colors.black,
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

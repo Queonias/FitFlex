@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:logger/logger.dart';
+
+final logger = Logger();
 
 class FarebaseDB {
   Future<List<DocumentSnapshot>> buscarExercicios(String target) async {
@@ -16,7 +19,7 @@ class FarebaseDB {
       return querySnapshot.docs;
     } catch (error) {
       // Trata qualquer erro que ocorrer
-      print('Erro ao buscar exercícios: $error');
+      logger.e('Erro ao buscar exercícios: $error');
       return [];
     }
   }
@@ -33,7 +36,7 @@ class FarebaseDB {
       return querySnapshot.docs;
     } catch (error) {
       // Trata qualquer erro que ocorrer
-      print('Erro ao buscar exercícios: $error');
+      logger.e('Erro ao buscar exercícios: $error');
       return [];
     }
   }
@@ -55,7 +58,7 @@ class FarebaseDB {
       // Retorna a URL de download da imagem
       return downloadUrl;
     } catch (error) {
-      print('Erro ao carregar imagem: $error');
+      logger.e('Erro ao carregar imagem: $error');
       return ''; // Retorna uma string vazia em caso de erro
     }
   }
@@ -77,7 +80,7 @@ class FarebaseDB {
       return querySnapshot.docs;
     } catch (error) {
       // Trata qualquer erro que ocorrer
-      print('Erro ao buscar exercícios: $error');
+      logger.e('Erro ao buscar exercícios: $error');
       return [];
     }
   }
@@ -96,7 +99,7 @@ class FarebaseDB {
       return querySnapshot.docs.isNotEmpty ? querySnapshot.docs.last : null;
     } catch (error) {
       // Trata qualquer erro que ocorrer
-      print('Erro ao obter documento no índice $index: $error');
+      logger.e('Erro ao obter documento no índice $index: $error');
       return null;
     }
   }
@@ -113,7 +116,7 @@ class FarebaseDB {
       return snapshot.exists ? snapshot : null;
     } catch (error) {
       // Trata qualquer erro que ocorrer
-      print('Erro ao buscar usuário: $error');
+      logger.e('Erro ao buscar usuário: $error');
       return null;
     }
   }

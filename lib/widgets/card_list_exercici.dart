@@ -55,14 +55,12 @@ class CardList extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        child: Text(
-                          exercicio['name'],
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            overflow: TextOverflow.ellipsis,
-                            fontSize: 15,
-                          ),
+                      Text(
+                        exercicio['name'],
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                          fontSize: 15,
                         ),
                       ),
                       Text(

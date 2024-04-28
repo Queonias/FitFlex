@@ -3,6 +3,7 @@ import 'package:academia/telas/tela_details.dart';
 import 'package:academia/widgets/card_list_exercici.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:logger/logger.dart';
 
 class ExercicioList extends StatefulWidget {
   final String title; // Adicionando o parâmetro title
@@ -16,6 +17,7 @@ class ExercicioList extends StatefulWidget {
 }
 
 class _ExercicioListState extends State<ExercicioList> {
+  final logger = Logger();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +50,7 @@ class _ExercicioListState extends State<ExercicioList> {
                   child: GestureDetector(
                     onTap: () {
                       // Ação desejada quando o usuário clicar no card
-                      print('Card clicado: ${exercicio['name']}');
+                      logger.e('Card clicado: ${exercicio['name']}');
                       // Adicione aqui a ação que deseja executar
                       Navigator.push(
                           context,
