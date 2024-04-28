@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:academia/telas/menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:academia/home.dart';
 import 'package:academia/model/usuario.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:academia/helpers/conect_db.dart';
@@ -16,12 +15,9 @@ class Cadastro extends StatefulWidget {
 }
 
 class _CadastroState extends State<Cadastro> {
-  final TextEditingController _controllerNome =
-      TextEditingController(text: "Queonias");
-  final TextEditingController _controllerEmail =
-      TextEditingController(text: "queonias@gmail.com");
-  final TextEditingController _controllerSenha =
-      TextEditingController(text: "123456");
+  final TextEditingController _controllerNome = TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerSenha = TextEditingController();
 
   void _validarCampos() {
     String nome = _controllerNome.text;

@@ -100,4 +100,21 @@ class FarebaseDB {
       return null;
     }
   }
+
+  Future<DocumentSnapshot?> getUser(String userId) async {
+    try {
+      // Acessa o documento diretamente usando o UID como ID do documento
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+          .collection('usuarios')
+          .doc(userId)
+          .get();
+
+      // Retorna o documento encontrado (ou null se nenhum for encontrado)
+      return snapshot.exists ? snapshot : null;
+    } catch (error) {
+      // Trata qualquer erro que ocorrer
+      print('Erro ao buscar usuário: $error');
+      return null;
+    }
+  }
 }

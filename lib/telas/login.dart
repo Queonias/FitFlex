@@ -2,10 +2,10 @@ import 'dart:typed_data';
 
 import 'package:academia/helpers/conect_db.dart';
 import 'package:academia/telas/cadastro.dart';
+import 'package:academia/telas/menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:academia/cadastro.dart';
-import 'package:academia/home.dart';
 import 'package:academia/model/usuario.dart';
 
 class Login extends StatefulWidget {
@@ -57,7 +57,7 @@ class _LoginState extends State<Login> {
             email: usuario.email, password: usuario.senha)
         .then((firebaseUser) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const Home()));
+          context, MaterialPageRoute(builder: (context) => const Menu()));
     }).catchError((error) {
       setState(() {
         const snackBar = SnackBar(
