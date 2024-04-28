@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logger/logger.dart';
 
+final logger = Logger();
+
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
 
@@ -44,7 +46,7 @@ class _ProfileState extends State<Profile> {
     try {
       await FirebaseAuth.instance.signOut();
     } catch (e) {
-      print("Erro ao fazer logout: $e");
+      logger.e("Erro ao fazer logout: $e");
     }
   }
 
